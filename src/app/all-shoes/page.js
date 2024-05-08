@@ -1,28 +1,17 @@
-import Link from "next/link";
-
-export const metadata = {
-  title: "Home page",
-  description: "This is home page",
-};
-
-const HomePage = async () => {
+const AllShesPage = async () => {
   const res = await fetch("http://localhost:5000/shoes", {
-    next: {
-      revalidate: 5,
-    },
+    cache: "no-cache",
   });
-
   const shoes = await res.json();
   console.log(shoes);
-  // throw new Error("Something went wrong");
   return (
-    <div className="text-center">
-      <h1 className="text-5xl font-bold text-center my-6">Shoes</h1>
-      <div className="mx-auto">
-        <div className="flex justify-around">
-          {shoes.slice(0, 3).map((shoe) => (
+    <div>
+      <h1 className="text-5xl font-bold text-center my-6">All Shoes</h1>
+      <div className="mx-10">
+        <div className="grid grid-cols-4 gap-4">
+          {shoes.map((shoe) => (
             <div key={shoe.id}>
-              <div className="card w-80 bg-base-100 shadow-xl h-full">
+              <div className="card bg-base-100 shadow-xl w-full h-full">
                 <figure>
                   <img
                     src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
@@ -42,11 +31,7 @@ const HomePage = async () => {
           ))}
         </div>
       </div>
-      <button className="btn btn-accent my-5">
-        <Link href="all-shoes">See More</Link>
-      </button>
     </div>
   );
 };
-
-export default HomePage;
+export default AllShesPage;
